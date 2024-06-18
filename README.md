@@ -24,13 +24,13 @@ With the prerequisites in place, building diam CatNix is straightforward:
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/diam-systems/diam-CatNix.git
+   https://github.com/diamSystems/diam-CATNIX.git
    ```
 
 2. **Navigate to the project directory:**
 
    ```bash
-   cd diam-CatNix
+   cd diam-CATNIX
    ```
 
 3. **Build (ISO included):**
