@@ -1,87 +1,88 @@
-<h1 align=center><a href="https://catk.neocities.org">CatK</a></h1>
+## diam CatNix: A Purrfect Playground for Kernel Exploration (Forked from CatK)
 
-<p align=center>a simple Unix-like kernel made in C, with a cute kitty (CatK) to go with it</p>
+**diam Systems** is proud to introduce **diam CatNix**, a lightweight experimental kernel based on the popular **CatK** project. We believe in fostering a playful and educational open-source environment, and diam CatNix embodies that spirit.
 
----
+**What is diam CatNix?**
 
-![image](https://github.com/Rodmatronic/CatK/assets/105672808/2ca8018b-3506-49c7-a515-2d455a4a9806)
-![image](https://github.com/Rodmatronic/CatK/assets/105672808/3638a369-b576-4271-8f9c-a87ac844a8c1)
+diam CatNix is a simple, Unix-like kernel written primarily in C. It serves as a perfect platform for learning kernel development fundamentals and experimenting with innovative functionalities.  Think of it as your own personal kernel sandbox!
 
-**Table of Contents**
-- [What is CatK?](#what-is-catk)
-- [Compiling it](#compiling-it)
-- [Running it](#running-it)
-- [Debugging it](#debugging-it)
-- [Contributing](#contributing)
-- [Support/Issues](#supportissues)
-- [Get in touch](#get-in-touch)
-- [Licensing](#licensing)
+**Getting Started with diam CatNix**
 
-## What is CatK?
-CatK is a kernel taking inspiration from FreeBSD and similar Unix-like systems written almost completely in C.\
-CatK is also the cat that represents this project.
+**Building Requirements:**
 
-We love CatK.
+* A Unix-like system or environment (preferably Linux)
+* **clang 14+** with support for i686-pc-none-elf (most installations should have this)
+* **LLVM lld** (or GNU ld, if configured manually)
+* **grub-mkrescue** (usually comes with GRUB) and **xorriso**
+* **NASM assembler**
+* **GNU make**
 
-## Compiling it
-You'll need:
-- a unix-like system/environment (preferably Linux)
-  - compiling on Windows is possible provided a unix-style environment (uutils, mingw, etc). you cannot build any ISOs however (credit [@Ruthenic](https://github.com/Ruthenic))
-- clang 14+ with support for i686-pc-none-elf (so, most installs)
-- LLVM lld (or GNU ld, if you set it manually)
-- grub-mkrescue (This usually comes with GRUB) and xorriso
-- the NASM assembler
-- GNU make
+**Building diam CatNix:**
 
-Afterwards, it's very simple to compile. All you need to do is run `make`, and your ISO will be automagically prepared in the out/ folder.
+With the prerequisites in place, building diam CatNix is straightforward:
 
-You can skip ISO building and multiboot signature checking by using `SKIP_ISO=1 make` and `SKIP_MB_CHECK=1 make` respectively.
+1. **Clone the repository:**
 
-These are implied and forced on Windows, as they cannot be performed.
+   ```bash
+   git clone https://github.com/diam-systems/diam-CatNix.git
+   ```
 
-If you prefer, you can compile with multiple threads with `make -j$(nproc)`. This will use as many threads as your CPU has available.
+2. **Navigate to the project directory:**
 
-## Running it
-You can use essentially any virtualizer you have. We prefer QEMU or VirtualBox.
+   ```bash
+   cd diam-CatNix
+   ```
 
-If you wanna use QEMU, you can start the ISO up with `qemu-system-i386 -cdrom /path/to/catkernel.iso` (hint: it's usually in out/)\
-Also, if you're using QEMU, you can directly start the kernel with `qemu-system-i386 -kernel /path/to/catkernel.bin` (hint: it's usually in out/isodir/boot, or just out/ if you are not building the ISO)
+3. **Build (ISO included):**
 
-See "Debugging it" for compiling/running with a debugger (GDB/LLDB).
+   ```bash
+   make
+   ```
 
-## Debugging it
-This guide assumes you already have a familiarity with GDB/LLDB (we can't assist with using your debugger of choice.)
+   This will create a bootable ISO image in the `out/` folder.
 
-First, build CatK with debug symbols enabled (`make clean && DEBUG=1 make`).
+4. **Optional Build Options:**
+    * Skip ISO building: `make SKIP_ISO=1`
+    * Skip multiboot signature checking: `make SKIP_MB_CHECK=1`
+    * Use multiple threads (if applicable): `make -j$(nproc)`
 
-Next, run QEMU like this: `qemu-system-i386 -s -S -kernel /path/to/catkernel.bin`\
-QEMU will wait for you to attach a GDB-compatible debugger and to `continue`. Let's do that.
+**Running diam CatNix:**
 
-Run `gdb /path/to/catkernel.bin` or `lldb /path/to/catkernel.bin`. You will be dropped to your debugger's shell.
+* **Virtualization:** Run diam CatNix using a virtual machine like QEMU or VirtualBox.
+* **QEMU with ISO:**
 
-In that shell, run `target remote localhost:1234` for GDB, and `gdb-remote localhost:1234` for LLDB.
+   ```bash
+   qemu-system-i386 -cdrom /path/to/diam-catnix.iso
+   ```
 
-Run `c` to tell the VM to start running.
+* **QEMU with Kernel Image:**
 
-As a quick crash course, `CTRL + C` pauses execution while continuing, `b function_name` will let you break when the specified function is hit. `s` will let you step by instructions. `c` will continue as normal until the next breakpoint.
+   ```bash
+   qemu-system-i386 -kernel /path/to/diam-catnix.bin
+   ```
 
-Happy travels.
+   (Kernel image typically located in `out/isodir/boot` or `out/` if not building the ISO)
 
-## Contributing
-Contributions are accepted and encouraged!
+**Debugging (Optional):**
 
-Please try to follow the coding style (we have so much cleaning up to do...) that the rest of the code follows.
+1. Enable debug symbols: `make clean && DEBUG=1 make`
+2. Run QEMU with debugging enabled (refer to "Building it" for details).
+3. Use a debugger like GDB or LLDB to step through the code.
 
-Please discuss changes you intend on making if they are large in the dev section of our Discord (see "Get in touch").
+**Contributing to diam CatNix**
 
-## Support/Issues
-If you have a question or a small issue/something you don't quite understand, it's best to just join our Discord. See "Get in touch" for that.
-Otherwise, if it's a large bug that you think you can provide good info on, it's best to create a GitHub issue as that helps us track the problem better.
+diam Systems welcomes contributions from all skill levels! If you're passionate about kernel development, we encourage you to:
 
-## Get in touch
-Currently, the best way to get in touch with the developers, to discuss contributions, and generally be a part of the CatK community is to join our [Discord](https://discord.gg/6U3pQEkTT7).
+* Explore the codebase and delve into the world of kernels.
+* Propose improvements and share your innovative ideas.
+* Collaborate with the community to shape the future of diam CatNix.
 
-It's quite nice there.
+**Please refer to the CONTRIBUTING.md file for guidelines on contributing.**
 
-## Licensing
-CatK is licensed under the GNU General Public License version 3. See LICENSE.
+**Get in Touch**
+
+Join the diam Systems community on [insert platform, e.g., Discord server link] to connect with developers, discuss contributions, and be part of the open-source adventure!
+
+**Licensing**
+
+diam CatNix is licensed under the GNU General Public License version 3 (GPLv3). See the LICENSE file for details.
